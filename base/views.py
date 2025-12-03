@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm, UserForm
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -174,3 +174,15 @@ def user_profile(request, pk):
         'topics': topics
     }
     return render(request, 'base/user_profile.html', context)
+
+@login_required(login_url='login')
+def update_user(request):
+    user = request.user
+    form = UserForm(instance=user)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk=user.id)
+    context = {'form': form}
+    return render(request, 'base/update_user.html', context)
