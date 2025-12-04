@@ -1,8 +1,22 @@
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    name = models.CharField(null=True, max_length=255)
+    email = models.EmailField(unique=True, max_length=255, null=True)
+    bio = models.TextField(null=True, blank=True)
+
+    avatar = models.ImageField(null=True, blank=True, default='avatar.svg')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 
 class Topic(models.Model):
+
     name = models.TextField(max_length=200)
 
     def __str__(self):
@@ -37,4 +51,3 @@ class Message(models.Model):
 
     def __str__(self):
         return self.body[0:50]
-    
