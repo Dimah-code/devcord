@@ -2,7 +2,7 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="{% url 'home' %}" class="header__logo">
-            <img src="{% static 'images/logo.svg' %}" alt="Logo">
+            <img src="{% static 'images/logo.svg' %}" alt="Logo" style="width: 60   px; height: 50px; object-fit: contain;">
             <h1>Devcord</h1>
         </a>
         <form class="header__search" method="GET" action="{% url 'home' %}">
